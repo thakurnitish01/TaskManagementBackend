@@ -4,10 +4,10 @@ using System.Data.Common;
 
 namespace taskManagementBackend.Models
 {
-    public class taskContext : DbContext
+    public class eventContext : DbContext
     {
-        public taskContext(DbContextOptions<taskContext> options) :  base(options) { }
-        public DbSet<taskModel> taskModel { get; set;}
+        public eventContext(DbContextOptions<eventContext> options) :  base(options) { }
+        public DbSet<eventModel> eventModel { get; set;}
         public DbSet<User> user { get; set; }
     }
 }

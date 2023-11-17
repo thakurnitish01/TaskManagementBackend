@@ -17,17 +17,17 @@ namespace DotNetAngularApplication.Controllers
     public class LoginController : ControllerBase
     {
         public IConfiguration _configuration;
-        public readonly taskContext _taskContext;
-        public LoginController(IConfiguration configuration, taskContext taskcontext)
+        public readonly eventContext _eventContext;
+        public LoginController(IConfiguration configuration, eventContext taskcontext)
         {
-            _taskContext = taskcontext;
+            _eventContext = taskcontext;
             _configuration = configuration;
         }
 
         [HttpGet]
         public async Task<User> GetUser(string username, string password)
         {
-            var user = await _taskContext.user.FirstOrDefaultAsync(u => u.UserName == username && u.Password == password);
+            var user = await _eventContext.user.FirstOrDefaultAsync(u => u.UserName == username && u.Password == password);
             if (user == null)
             {
                 throw new Exception("User not found with the provided credentials.");
@@ -83,14 +83,14 @@ namespace DotNetAngularApplication.Controllers
             {
                 return BadRequest("Invalid user data. Please provide a valid username and password.");
             }
-            var checkEmail = await _taskContext.user.FirstOrDefaultAsync(u => u.UserName == userData.UserName);
+            var checkEmail = await _eventContext.user.FirstOrDefaultAsync(u => u.UserName == userData.UserName);
             if (checkEmail != null)
             {
                 return BadRequest("This Email already exists.");
             }
 
-            var addedUser = _taskContext.user.Add(userData);
-            await _taskContext.SaveChangesAsync();
+            var addedUser = _eventContext.user.Add(userData);
+            await _eventContext.SaveChangesAsync();
 
             return Ok(addedUser.Entity);
 

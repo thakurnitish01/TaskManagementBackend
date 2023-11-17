@@ -10,7 +10,7 @@ using taskManagementBackend.Models;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.AddDbContext<taskContext>(options =>
+builder.Services.AddDbContext<eventContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("Data")));
 
 builder.Services.AddControllers().AddJsonOptions(options =>

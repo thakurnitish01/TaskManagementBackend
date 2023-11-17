@@ -10,8 +10,8 @@ using taskManagementBackend.Models;
 
 namespace taskManagementBackend.Migrations
 {
-    [DbContext(typeof(taskContext))]
-    partial class taskContextModelSnapshot : ModelSnapshot
+    [DbContext(typeof(eventContext))]
+    partial class eventContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)
         {
@@ -51,7 +51,7 @@ namespace taskManagementBackend.Migrations
                     b.ToTable("user");
                 });
 
-            modelBuilder.Entity("taskManagementBackend.Models.taskModel", b =>
+            modelBuilder.Entity("taskManagementBackend.Models.eventModel", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -63,15 +63,15 @@ namespace taskManagementBackend.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<bool>("IsActive")
-                        .HasColumnType("bit");
-
-                    b.Property<int>("TaskId")
+                    b.Property<int>("EventId")
                         .HasColumnType("int");
 
-                    b.Property<string>("TaskTitle")
+                    b.Property<string>("EventTitle")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
 
                     b.Property<DateTime>("Time")
                         .HasColumnType("datetime2");
