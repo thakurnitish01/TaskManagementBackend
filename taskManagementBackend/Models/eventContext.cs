@@ -9,6 +9,7 @@ namespace taskManagementBackend.Models
         public eventContext(DbContextOptions<eventContext> options) :  base(options) { }
         public DbSet<eventModel> eventModel { get; set;}
         public DbSet<User> user { get; set; }
+        public DbSet<TicketBooking> ticketBooking { get; set; }
     }
 }
 

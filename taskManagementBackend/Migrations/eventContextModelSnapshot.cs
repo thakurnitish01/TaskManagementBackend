@@ -51,6 +51,43 @@ namespace taskManagementBackend.Migrations
                     b.ToTable("user");
                 });
 
+            modelBuilder.Entity("taskManagementBackend.Models.TicketBooking", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("EventId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("PersonAge")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PersonGender")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PersonName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PersonPhone")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("eventModelId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("eventModelId");
+
+                    b.ToTable("ticketBooking");
+                });
+
             modelBuilder.Entity("taskManagementBackend.Models.eventModel", b =>
                 {
                     b.Property<int>("Id")
@@ -63,9 +100,6 @@ namespace taskManagementBackend.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("EventId")
-                        .HasColumnType("int");
-
                     b.Property<string>("EventTitle")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -76,13 +110,27 @@ namespace taskManagementBackend.Migrations
                     b.Property<DateTime>("Time")
                         .HasColumnType("datetime2");
 
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
                     b.Property<string>("location")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
-                    b.ToTable("taskModel");
+                    b.ToTable("eventModel");
+                });
+
+            modelBuilder.Entity("taskManagementBackend.Models.TicketBooking", b =>
+                {
+                    b.HasOne("taskManagementBackend.Models.eventModel", "eventModel")
+                        .WithMany()
+                        .HasForeignKey("eventModelId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("eventModel");
                 });
 #pragma warning restore 612, 618
         }

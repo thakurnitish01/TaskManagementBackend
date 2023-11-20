@@ -12,12 +12,12 @@ namespace taskManagementBackend.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "taskModel",
+                name: "eventModel",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    EventId = table.Column<int>(type: "int", nullable: false),
+                    UserId = table.Column<int>(type: "int", nullable: false),
                     EventTitle = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     location = table.Column<string>(type: "nvarchar(max)", nullable: false),
@@ -26,7 +26,7 @@ namespace taskManagementBackend.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_taskModel", x => x.Id);
+                    table.PrimaryKey("PK_eventModel", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -44,16 +44,48 @@ namespace taskManagementBackend.Migrations
                 {
                     table.PrimaryKey("PK_user", x => x.UserId);
                 });
+
+            migrationBuilder.CreateTable(
+                name: "ticketBooking",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    EventId = table.Column<int>(type: "int", nullable: false),
+                    PersonName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    PersonAge = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    PersonGender = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    PersonPhone = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    eventModelId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ticketBooking", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_ticketBooking_eventModel_eventModelId",
+                        column: x => x.eventModelId,
+                        principalTable: "eventModel",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ticketBooking_eventModelId",
+                table: "ticketBooking",
+                column: "eventModelId");
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "taskModel");
+                name: "ticketBooking");
 
             migrationBuilder.DropTable(
                 name: "user");
+
+            migrationBuilder.DropTable(
+                name: "eventModel");
         }
     }
 }
